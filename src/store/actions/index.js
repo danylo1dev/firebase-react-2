@@ -2,10 +2,13 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     ADD_REVIEW,
-    CLEAR_REVIEW
+    CLEAR_REVIEW,
+    GET_REVIEWS,
+    GET_REVIEW_BY_ID
 } from '../types';
 
 import * as api from '../../api';
+import { applyMiddleware } from 'redux';
 
 
 //======= auth
@@ -45,4 +48,24 @@ export const addReview = (data,user) => ({
 export const clearReview = () => ({
     type: CLEAR_REVIEW,
     payload:null
+})
+
+export const getReviews = (limit) => ({
+    type:GET_REVIEWS,
+    payload: api.getReviews(limit)
+})
+
+export const loadMoreReviews = (limit, reviews) => ({
+    type:GET_REVIEWS,
+    payload: api.loadMoreReviews(limit, reviews)
+})
+
+export const getReviewById = (id) => ({
+    type:GET_REVIEW_BY_ID,
+    payload: api.getReviewById(id)
+})
+
+export const editReview = (data,id) => ({
+    type:GET_REVIEW_BY_ID,
+    payload: api.editReview(data,id)
 })

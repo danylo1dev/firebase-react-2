@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/storage';
 
 import { usersCollection, reviewsCollection } from '../utils/fbase';
 
@@ -90,3 +91,61 @@ export const addReview = (data,user) => (
         return docRef.id
     })
 )
+
+
+export const getReviews = (limit) => (
+    reviewsCollection
+    .orderBy('createdAt')
+    .limit(limit)
+    .get()
+    .then( snapshot =>{
+        const lastVisible = snapshot.docs[snapshot.docs.length-1];
+        const reviews =  snapshot.docs.map( doc => ({
+            id: doc.id, ...doc.data()
+        }));
+
+        return { posts: reviews,lastVisible:lastVisible }
+    })
+);
+
+export const loadMoreReviews = (limit, reviews) => {
+    let posts = [...reviews.posts];
+    let lastVisible = reviews.lastVisible;
+
+    if(lastVisible){
+        return reviewsCollection
+        .orderBy('createdAt')
+        .startAfter(lastVisible)
+        .limit(limit)
+        .get()
+        .then( snapshot => {
+            const lastVisible = snapshot.docs[snapshot.docs.length-1];
+            const newReviews =  snapshot.docs.map( doc => ({
+                id: doc.id, ...doc.data()
+            }));
+
+            return { posts: [...posts,...newReviews],lastVisible }
+        });
+    } else {
+        console.log('no more posts')
+        return { posts, lastVisible }
+    }
+}
+
+export const editReview = (data, id) => (
+    reviewsCollection.doc(id).update(data).then(()=>{
+        return getReviewById(id)
+    })
+)
+
+export const getReviewById = async(id) => {
+    try {
+        const snapshot = await reviewsCollection.doc(id).get();
+        const data = snapshot.data();
+
+        const url = await firebase.storage().ref(`reviews/${data.img}`).getDownloadURL()
+        return { ...data, downloadUrl:url }
+    } catch(error) {
+        return null
+    }
+}
