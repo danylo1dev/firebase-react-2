@@ -4,11 +4,21 @@ import {
     ADD_REVIEW,
     CLEAR_REVIEW,
     GET_REVIEWS,
-    GET_REVIEW_BY_ID
+    GET_REVIEW_BY_ID,
+    FETCH_POSTS,
+    SEND_CONTACT
 } from '../types';
 
 import * as api from '../../api';
 import { applyMiddleware } from 'redux';
+
+
+//======= contact
+
+export const sendContact = (data) => ({
+    type:SEND_CONTACT,
+    payload: api.sendContact(data)
+});
 
 
 //======= auth
@@ -39,6 +49,12 @@ export const updateProfile = (formData,isEmailChanged) => ({
 })
 
 //======= reviews
+
+export const fetchPosts = (id,cond) => ({
+    type:FETCH_POSTS,
+    payload: api.fetchPosts(id,cond)
+})
+
 
 export const addReview = (data,user) => ({
     type:ADD_REVIEW,
