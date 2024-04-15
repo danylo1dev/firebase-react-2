@@ -1,6 +1,34 @@
-# Getting Started with Create React App
+# Xтbeats app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple application for music fans, here you can share your thoughts about new albums or releases of your favorite artists
+
+## What I was learn
+
+I learned how to use Firebase and all its benefits. I created a frontend application and instead of a server I used all the advantages of Firebase such as database authentication and cloud functions
+
+---
+
+# Installing
+
+## Prerequisites
+
+Before you begin, ensure you have Node.js version 18.16.0 or later installed on your machine.
+
+## Getting Started
+
+To get started with the project, follow these steps:
+
+1. Clone the repository from GitHub:
+
+   ```bash
+   git clone https://github.com/danylo1dev/firebase-react-2.git
+   ```
+
+2. Install all dependencies:
+
+   ```bash
+   npm ci
+   ```
 
 ## Available Scripts
 
