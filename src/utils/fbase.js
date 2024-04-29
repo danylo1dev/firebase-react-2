@@ -1,14 +1,22 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-
+require("dotenv").config();
+const {
+  apiKey,
+  authDomain,
+  projectId,
+  storageBucket,
+  messagingSenderId,
+  appId,
+} = process.env;
 const config = {
-  apiKey: "AIzaSyAMRHdDU0s2Bo5lXwvcMDrBH1eXb_A7-PE",
-  authDomain: "xnbeats-app.firebaseapp.com",
-  projectId: "xnbeats-app",
-  storageBucket: "xnbeats-app.appspot.com",
-  messagingSenderId: "1008294026302",
-  appId: "1:1008294026302:web:d9f748189378b889ca056f",
+  apiKey,
+  authDomain,
+  projectId,
+  storageBucket,
+  messagingSenderId,
+  appId,
 };
 
 const fBaseApp = firebase.initializeApp(config);

@@ -1,25 +1,24 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { Form, Button, Container } from 'react-bootstrap';
-import { toast } from 'react-toastify';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { Form, Button, Container } from "react-bootstrap";
+import { toast } from "react-toastify";
 
-import { useDispatch } from 'react-redux';
-import { sendContact } from '../../store/actions';
+import { useDispatch } from "react-redux";
+import { sendContact } from "../../store/actions";
+import { emailPatern } from "../../utils/patterns";
 
 const Contact = (props) => {
   const dispatch = useDispatch();
   const { register, handleSubmit, errors, reset } = useForm();
 
-  const submitForm = data => {
-    dispatch(sendContact(data)).then(()=>{ 
-      toast.success('Thanks, we will contact you back as soon as possible.',{
-        position:toast.POSITION.BOTTOM_RIGHT
+  const submitForm = (data) => {
+    dispatch(sendContact(data)).then(() => {
+      toast.success("Thanks, we will contact you back as soon as possible.", {
+        position: toast.POSITION.BOTTOM_RIGHT,
       });
       reset();
-    
-    })
-  }
-
+    });
+  };
 
   return (
     <>
@@ -32,10 +31,11 @@ const Contact = (props) => {
             <Form.Control
               type="text"
               name="name"
-              ref={register({required:true})}
+              ref={register({ required: true })}
             />
-            {errors.name &&  <span className="error">This field is required</span>}
-           
+            {errors.name && (
+              <span className="error">This field is required</span>
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Email</Form.Label>
@@ -43,11 +43,13 @@ const Contact = (props) => {
               type="Email"
               name="email"
               ref={register({
-                required:true,
-                pattern:/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, // eslint-disable-line
+                required: true,
+                pattern: emailPatern,
               })}
             />
-            {errors.email &&  <span className="error">Please check your email</span>}
+            {errors.email && (
+              <span className="error">Please check your email</span>
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Example textarea</Form.Label>
@@ -55,18 +57,17 @@ const Contact = (props) => {
               as="textarea"
               rows="3"
               name="message"
-              ref={register({required:true})}
+              ref={register({ required: true })}
             />
-            {errors.message &&  <span className="error">Add a message</span>}
+            {errors.message && <span className="error">Add a message</span>}
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit
           </Button>
         </Form>
-
       </Container>
     </>
-  )
-}
+  );
+};
 
 export default Contact;
